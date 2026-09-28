@@ -118,6 +118,18 @@ export default function PersonalizarPage() {
 
             <button
               type="button"
+              onClick={() => {
+                window.localStorage.setItem(
+                  "nfc-order",
+                  JSON.stringify({
+                    businessName,
+                    linkType: selectedType.label,
+                    url,
+                    quantity,
+                  })
+                );
+                window.location.href = "/resumen";
+              }}
               className="w-full rounded-full bg-black px-8 py-4 font-semibold text-white transition hover:scale-[1.01]"
             >
               Continuar con el pedido
