@@ -75,7 +75,63 @@ export default function PedidoDetallePage() {
             </div>
 
             <div className="mt-8 rounded-[2rem] border border-zinc-200 p-7 md:p-9">
+              <h2 className="text-xl font-bold">Seguimiento del pedido</h2>
+              <p className="mt-2 text-sm text-zinc-500">Estado actual de tu tarjeta NFC.</p>
+              <div className="mt-8">
+                <div className="hidden items-start sm:flex">
+                  {[
+                    ["✓", "Pedido recibido", true],
+                    ["✓", "En preparación", completed],
+                    ["✓", "Fabricando", false],
+                    ["○", "Enviado", false],
+                    ["○", "Entregado", false],
+                  ].map(([icon, label, active], index, items) => (
+                    <div key={String(label)} className="flex flex-1 items-start">
+                      <div className="flex flex-1 flex-col items-center text-center">
+                        <div className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold ${active ? "bg-black text-white" : "border border-zinc-200 bg-white text-zinc-300"}`}>
+                          {icon}
+                        </div>
+                        <p className={`mt-3 text-xs font-semibold ${active ? "text-zinc-950" : "text-zinc-400"}`}>{label}</p>
+                      </div>
+                      {index < items.length - 1 && (
+                        <div className={`mt-5 h-px flex-1 ${completed && index === 0 ? "bg-black" : "bg-zinc-200"}`} />
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <div className="space-y-3 sm:hidden">
+                  {[
+                    ["✓", "Pedido recibido", true],
+                    [completed ? "✓" : "○", "En preparación", completed],
+                    ["○", "Fabricando", false],
+                    ["○", "Enviado", false],
+                    ["○", "Entregado", false],
+                  ].map(([icon, label, active]) => (
+                    <div key={String(label)} className={`flex items-center gap-4 rounded-2xl border p-4 ${active ? "border-zinc-200 bg-zinc-50" : "border-zinc-100"}`}>
+                      <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold ${active ? "bg-black text-white" : "border border-zinc-200 text-zinc-300"}`}>{icon}</div>
+                      <span className={`text-sm font-semibold ${active ? "text-zinc-950" : "text-zinc-400"}`}>{label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 rounded-[2rem] border border-zinc-200 p-7 md:p-9">
               <h2 className="text-xl font-bold">Estado del pedido</h2>
+              <div className="mt-7 grid gap-4 sm:grid-cols-4">
+                {[
+                  ["✓", "Pedido creado", true],
+                  ["✓", "Tarjeta personalizada", true],
+                  [completed ? "✓" : "○", "Pedido preparado", completed],
+                  ["○", "Pago pendiente de conexión", false],
+                ].map(([icon, label, active]) => (
+                  <div key={String(label)} className={`rounded-2xl border px-5 py-5 ${active ? "border-zinc-200 bg-zinc-50" : "border-zinc-100"}`}>
+                    <p className={`text-xl ${active ? "text-black" : "text-zinc-300"}`}>{icon}</p>
+                    <p className="mt-3 text-sm font-semibold">{label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
               <div className="mt-7 grid gap-4 sm:grid-cols-4">
                 {[
                   ["✓", "Pedido creado", true],
