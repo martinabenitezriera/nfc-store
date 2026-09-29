@@ -23,6 +23,7 @@ export default function PagoPage() {
   const [showForm, setShowForm] = useState(false);
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
+  const [purchaseComplete, setPurchaseComplete] = useState(false);
 
   const addCard = () => {
     const digits = cardNumber.replace(/\D/g, "");
@@ -52,6 +53,73 @@ export default function PagoPage() {
       return next;
     });
   };
+
+  if (purchaseComplete) {
+    return (
+      <main className="min-h-screen bg-white text-zinc-950">
+        <nav className="flex items-center justify-between border-b border-zinc-100 px-6 py-5 md:px-12">
+          <Link href="/" className="text-2xl font-black tracking-tight">
+            NFC.
+          </Link>
+          <Link
+            href="/"
+            className="text-sm font-medium text-zinc-600 transition hover:text-black"
+          >
+            Volver al inicio
+          </Link>
+        </nav>
+
+        <section className="mx-auto flex min-h-[calc(100vh-82px)] max-w-4xl items-center px-6 py-16 md:px-12">
+          <div className="w-full rounded-[2.5rem] bg-zinc-950 px-7 py-12 text-white shadow-2xl md:px-14 md:py-16">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl text-black">
+              ✓
+            </div>
+            <p className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-zinc-400">
+              Pedido preparado
+            </p>
+            <h1 className="mt-4 text-4xl font-black tracking-tight md:text-6xl">
+              Tu tarjeta está lista.
+            </h1>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-zinc-300">
+              Hemos preparado tu compra. El cobro real se activará cuando
+              conectemos el proveedor de pagos.
+            </p>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+              {[
+                ["✓", "Tarjeta configurada"],
+                ["✓", "Pedido preparado"],
+                ["✓", "Pago pendiente"],
+              ].map(([icon, label]) => (
+                <div
+                  key={label}
+                  className="rounded-2xl border border-white/10 bg-white/5 px-5 py-5"
+                >
+                  <p className="text-xl">{icon}</p>
+                  <p className="mt-3 text-sm font-semibold">{label}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/"
+                className="rounded-full bg-white px-7 py-4 text-center font-semibold text-black transition hover:scale-[1.01]"
+              >
+                Volver al inicio
+              </Link>
+              <Link
+                href="/personalizar"
+                className="rounded-full border border-white/15 px-7 py-4 text-center font-semibold transition hover:bg-white/10"
+              >
+                Crear otra tarjeta
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-white text-zinc-950">
@@ -173,6 +241,15 @@ export default function PagoPage() {
           )}
         </div>
 
+        <button
+          type="button"
+          onClick={() => setPurchaseComplete(true)}
+          disabled={methods.length === 0}
+          className="mt-8 w-full rounded-[2rem] bg-zinc-950 px-7 py-5 text-lg font-bold text-white transition hover:scale-[1.01] disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-400"
+        >
+          Finalizar compra
+        </button>
+
         <div className="mt-10 rounded-[2rem] bg-zinc-50 p-6 md:p-7">
           <div className="flex gap-4">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-lg shadow-sm">
@@ -181,8 +258,9 @@ export default function PagoPage() {
             <div>
               <p className="font-bold">Pago seguro</p>
               <p className="mt-1 text-sm leading-6 text-zinc-500">
-                Esta pantalla es una simulación. El cobro real se conectará
-                posteriormente mediante el proveedor de pagos.
+                Esta pantalla es una simulación. Al finalizar, verás la confirmación
+                del pedido. El cobro real se conectará posteriormente mediante
+                el proveedor de pagos.
               </p>
             </div>
           </div>
