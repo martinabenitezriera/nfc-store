@@ -11,6 +11,13 @@ type OrderData = {
 };
 
 const PRICE = 29.9;
+const trackingSteps = ["Pedido recibido", "En preparación", "Fabricando", "Enviado", "Entregado"];
+
+function formatDateTime(date: Date) {
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit",
+  }).format(date);
+}
 
 export default function PedidoDetallePage() {
   const [order, setOrder] = useState<OrderData | null>(null);
