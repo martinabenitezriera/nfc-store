@@ -263,7 +263,13 @@ export default function PagoPage() {
 
         <button
           type="button"
-          onClick={() => setPurchaseComplete(true)}
+          onClick={() => {
+            const savedOrder = window.localStorage.getItem("nfc-order");
+            if (savedOrder) {
+              window.localStorage.setItem("nfc-order-complete", savedOrder);
+            }
+            setPurchaseComplete(true);
+          }}
           disabled={methods.length === 0}
           className="mt-8 w-full rounded-[2rem] bg-zinc-950 px-7 py-5 text-lg font-bold text-white transition hover:scale-[1.01] disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-400"
         >
