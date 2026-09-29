@@ -132,7 +132,6 @@ export default function PedidoDetallePage() {
                 ))}
               </div>
             </div>
-            </div>
           </>
         )}
       </section>
