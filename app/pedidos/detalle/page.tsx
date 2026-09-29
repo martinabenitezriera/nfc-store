@@ -27,7 +27,22 @@ export default function PedidoDetallePage() {
     }
   }, []);
 
+
+  const getTrackingTimes = () => {
+    const stored = window.localStorage.getItem("nfc-tracking-start");
+    const base = stored ? new Date(stored) : null;
+    if (!base || Number.isNaN(base.getTime())) return [];
+    return [
+      new Date(base),
+      new Date(base.getTime() + 10 * 60 * 1000),
+      new Date(base.getTime() + 24 * 60 * 60 * 1000),
+      new Date(base.getTime() + 2 * 24 * 60 * 60 * 1000),
+      new Date(base.getTime() + 4 * 24 * 60 * 60 * 1000),
+    ];
+  };
+
   const total = order ? order.quantity * PRICE : 0;
+  const trackingTimes = typeof window !== "undefined" ? getTrackingTimes() : [];
 
   return (
     <main className="min-h-screen bg-white text-zinc-950">
@@ -77,6 +92,7 @@ export default function PedidoDetallePage() {
             <div className="mt-8 rounded-[2rem] border border-zinc-200 p-7 md:p-9">
               <h2 className="text-xl font-bold">Seguimiento del pedido</h2>
               <p className="mt-2 text-sm text-zinc-500">Estado actual de tu tarjeta NFC.</p>
+              <p className="mt-5 text-sm text-zinc-500">Cada cambio de estado queda registrado con su fecha y hora.</p>
               <div className="mt-8">
                 <div className="hidden items-start sm:flex">
                   {[
@@ -92,6 +108,11 @@ export default function PedidoDetallePage() {
                           {icon}
                         </div>
                         <p className={`mt-3 text-xs font-semibold ${active ? "text-zinc-950" : "text-zinc-400"}`}>{label}</p>
+                        {trackingTimes[index] && (active || index === 0) ? (
+                          <p className="mt-1 text-[11px] text-zinc-400">{formatDateTime(trackingTimes[index])}</p>
+                        ) : (
+                          <p className="mt-1 text-[11px] text-zinc-300">Pendiente</p>
+                        )}
                       </div>
                       {index < items.length - 1 && (
                         <div className={`mt-5 h-px flex-1 ${completed && index === 0 ? "bg-black" : "bg-zinc-200"}`} />
@@ -110,6 +131,7 @@ export default function PedidoDetallePage() {
                     <div key={String(label)} className={`flex items-center gap-4 rounded-2xl border p-4 ${active ? "border-zinc-200 bg-zinc-50" : "border-zinc-100"}`}>
                       <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold ${active ? "bg-black text-white" : "border border-zinc-200 text-zinc-300"}`}>{icon}</div>
                       <span className={`text-sm font-semibold ${active ? "text-zinc-950" : "text-zinc-400"}`}>{label}</span>
+                      <span className="ml-auto text-xs text-zinc-400">{trackingTimes[trackingSteps.indexOf(String(label))] && (active || String(label) === "Pedido recibido") ? formatDateTime(trackingTimes[trackingSteps.indexOf(String(label))]) : "Pendiente"}</span>
                     </div>
                   ))}
                 </div>
