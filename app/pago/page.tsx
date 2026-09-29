@@ -267,6 +267,7 @@ export default function PagoPage() {
             const savedOrder = window.localStorage.getItem("nfc-order");
             if (savedOrder) {
               window.localStorage.setItem("nfc-order-complete", savedOrder);
+    window.localStorage.setItem("nfc-tracking-start", new Date().toISOString());
             }
             setPurchaseComplete(true);
           }}
