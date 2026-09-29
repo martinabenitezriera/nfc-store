@@ -9,12 +9,20 @@ export default function Home() {
         <Link href="/" className="text-2xl font-black tracking-tight">
           NFC.
         </Link>
-        <Link
-          href="/personalizar"
-          className="text-sm font-medium text-zinc-600 transition hover:text-black"
-        >
-          Personalizar
-        </Link>
+        <div className="flex items-center gap-6">
+          <Link
+            href="/pedidos"
+            className="text-sm font-medium text-zinc-600 transition hover:text-black"
+          >
+            Mis pedidos
+          </Link>
+          <Link
+            href="/personalizar"
+            className="text-sm font-medium text-zinc-600 transition hover:text-black"
+          >
+            Personalizar
+          </Link>
+        </div>
       </nav>
 
       <section className="mx-auto max-w-6xl px-6 py-20 md:px-12 md:py-32">
