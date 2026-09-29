@@ -36,9 +36,13 @@ export default function PedidoDetallePage() {
 
 
   const getTrackingTimes = () => {
-    const stored = window.localStorage.getItem("nfc-tracking-start");
-    const base = stored ? new Date(stored) : null;
-    if (!base || Number.isNaN(base.getTime())) return [];
+    let stored = window.localStorage.getItem("nfc-tracking-start");
+    if (!stored) {
+      stored = new Date().toISOString();
+      window.localStorage.setItem("nfc-tracking-start", stored);
+    }
+    const base = new Date(stored);
+    if (Number.isNaN(base.getTime())) return [];
     return [
       new Date(base),
       new Date(base.getTime() + 10 * 60 * 1000),
@@ -115,11 +119,9 @@ export default function PedidoDetallePage() {
                           {icon}
                         </div>
                         <p className={`mt-3 text-xs font-semibold ${active ? "text-zinc-950" : "text-zinc-400"}`}>{label}</p>
-                        {trackingTimes[index] && (active || index === 0) ? (
+                        {trackingTimes[index] ? (
                           <p className="mt-1 text-[11px] text-zinc-400">{formatDateTime(trackingTimes[index])}</p>
-                        ) : (
-                          <p className="mt-1 text-[11px] text-zinc-300">Pendiente</p>
-                        )}
+                        ) : null}
                       </div>
                       {index < items.length - 1 && (
                         <div className={`mt-5 h-px flex-1 ${completed && index === 0 ? "bg-black" : "bg-zinc-200"}`} />
@@ -138,7 +140,7 @@ export default function PedidoDetallePage() {
                     <div key={String(label)} className={`flex items-center gap-4 rounded-2xl border p-4 ${active ? "border-zinc-200 bg-zinc-50" : "border-zinc-100"}`}>
                       <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold ${active ? "bg-black text-white" : "border border-zinc-200 text-zinc-300"}`}>{icon}</div>
                       <span className={`text-sm font-semibold ${active ? "text-zinc-950" : "text-zinc-400"}`}>{label}</span>
-                      <span className="ml-auto text-xs text-zinc-400">{trackingTimes[trackingSteps.indexOf(String(label))] && (active || String(label) === "Pedido recibido") ? formatDateTime(trackingTimes[trackingSteps.indexOf(String(label))]) : "Pendiente"}</span>
+                      <span className="ml-auto text-xs text-zinc-400">{trackingTimes[trackingSteps.indexOf(String(label))] ? formatDateTime(trackingTimes[trackingSteps.indexOf(String(label))]) : ""}</span>
                     </div>
                   ))}
                 </div>
