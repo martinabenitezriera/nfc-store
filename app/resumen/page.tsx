@@ -80,12 +80,12 @@ export default function ResumenPage() {
               <p className="mt-5 text-sm leading-6 text-zinc-400">
                 El pago real con Shopify lo conectaremos en el siguiente paso.
               </p>
-              <button
-                type="button"
-                className="mt-8 w-full rounded-full bg-white px-8 py-4 font-semibold text-black transition hover:scale-[1.01]"
+              <Link
+                href="/pago"
+                className="mt-8 block w-full rounded-full bg-white px-8 py-4 text-center font-semibold text-black transition hover:scale-[1.01]"
               >
                 Continuar al pago
-              </button>
+              </Link>
             </div>
           </div>
         )}
