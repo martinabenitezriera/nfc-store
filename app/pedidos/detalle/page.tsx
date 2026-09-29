@@ -132,19 +132,6 @@ export default function PedidoDetallePage() {
                 ))}
               </div>
             </div>
-              <div className="mt-7 grid gap-4 sm:grid-cols-4">
-                {[
-                  ["✓", "Pedido creado", true],
-                  ["✓", "Tarjeta personalizada", true],
-                  [completed ? "✓" : "○", "Pedido preparado", completed],
-                  ["○", "Pago pendiente de conexión", false],
-                ].map(([icon, label, active]) => (
-                  <div key={String(label)} className={`rounded-2xl border px-5 py-5 ${active ? "border-zinc-200 bg-zinc-50" : "border-zinc-100"}`}>
-                    <p className={`text-xl ${active ? "text-black" : "text-zinc-300"}`}>{icon}</p>
-                    <p className="mt-3 text-sm font-semibold">{label}</p>
-                  </div>
-                ))}
-              </div>
             </div>
           </>
         )}
