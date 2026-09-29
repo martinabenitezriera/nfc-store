@@ -121,6 +121,13 @@ export default function PedidosPage() {
                 </div>
               </div>
             </div>
+
+            <Link
+              href="/pedidos/detalle"
+              className="mt-8 inline-flex rounded-full bg-zinc-950 px-7 py-4 font-semibold text-white transition hover:scale-[1.01]"
+            >
+              Ver detalles
+            </Link>
           </div>
         )}
       </section>
