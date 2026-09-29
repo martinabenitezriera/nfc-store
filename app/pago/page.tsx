@@ -85,6 +85,26 @@ export default function PagoPage() {
               conectemos el proveedor de pagos.
             </p>
 
+            <div className="mt-10 rounded-[2rem] border border-white/10 bg-white/5 p-6 md:p-7">
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-zinc-400">
+                    Resumen del pedido
+                  </p>
+                  <h2 className="mt-3 text-xl font-bold">Tu tarjeta NFC</h2>
+                  <p className="mt-1 text-sm text-zinc-400">
+                    Personalizada · 1 unidad
+                  </p>
+                </div>
+                <div className="sm:text-right">
+                  <p className="text-2xl font-black">29,90 €</p>
+                  <p className="mt-2 inline-flex rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-zinc-300">
+                    Pago pendiente de conexión
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {[
                 ["✓", "Tarjeta configurada"],
