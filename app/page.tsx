@@ -89,11 +89,11 @@ export default function Home() {
               aria-hidden="true"
             >
               <div
-                className="absolute -inset-4 rounded-[1.75rem] bg-black/15 blur-2xl"
+                className="absolute -inset-4 rounded-[1.75rem] bg-emerald-900/20 blur-2xl"
                 style={{ animation: "nfcCardGlow 2.4s cubic-bezier(.22,.8,.25,1) forwards" }}
               />
               <div
-                className="absolute inset-0 overflow-hidden rounded-[1.35rem] bg-black p-5 text-white shadow-[0_35px_100px_rgba(0,0,0,0.42)] ring-1 ring-white/10"
+                className="absolute inset-0 overflow-hidden rounded-[1.35rem] bg-gradient-to-br from-emerald-950 via-emerald-800 to-emerald-600 p-5 text-white shadow-[0_35px_100px_rgba(0,0,0,0.42)] ring-1 ring-white/10"
                 style={{
                   animation: "nfcCardIntro 2.5s cubic-bezier(.18,.78,.22,1) forwards, nfcCardFloat 5s ease-in-out 2.5s infinite",
                   transformOrigin: "center center",
