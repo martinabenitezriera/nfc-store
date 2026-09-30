@@ -156,6 +156,45 @@ export default function Home() {
           </Link>
         </div>
 
+        <section className="mt-28">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+              Para tu negocio
+            </p>
+            <h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">
+              Una tarjeta. Diferentes negocios.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-zinc-600">
+              Adapta tu tarjeta NFC a la acción que más importa en tu negocio.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+            {[
+              ["Restaurantes", "⭐ Reseñas de Google", "Consigue más opiniones después de cada visita.", "🍽️"],
+              ["Peluquerías", "💬 WhatsApp", "Facilita reservas y consultas en un toque.", "✂️"],
+              ["Clínicas", "📅 Reservas", "Lleva a tus pacientes a pedir cita fácilmente.", "＋"],
+              ["Hoteles", "⭐ Reseñas y web", "Comparte información, reseñas o servicios.", "⌂"],
+              ["Tiendas", "📸 Instagram", "Haz que tus clientes descubran tu marca.", "▣"],
+            ].map(([business, action, description, icon]) => (
+              <div
+                key={business}
+                className="group overflow-hidden rounded-[2rem] border border-zinc-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-xl transition duration-300 group-hover:scale-110">
+                  {icon}
+                </div>
+                <p className="mt-7 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700">
+                  {business}
+                </p>
+                <h3 className="mt-2 text-xl font-black tracking-tight">{action}</h3>
+                <p className="mt-3 text-sm leading-6 text-zinc-500">{description}</p>
+                <div className="mt-6 h-1 w-10 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-16" />
+              </div>
+            ))}
+          </div>
+        </section>
+
         <section className="mt-28 overflow-hidden rounded-[2.5rem] bg-emerald-50/70 px-6 py-12 md:px-12 md:py-16">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
