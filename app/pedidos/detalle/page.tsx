@@ -8,161 +8,309 @@ type OrderData = {
   linkType: string;
   url: string;
   quantity: number;
+  cardColor?: string;
+  cardStyle?: string;
 };
 
 const PRICE = 29.9;
-const trackingSteps = ["Pedido recibido", "En preparación", "Fabricando", "Enviado", "Entregado"];
+
+const colorLabels: Record<string, string> = {
+  emerald: "Esmeralda",
+  black: "Negra",
+  blue: "Azul",
+  white: "Blanca",
+};
+
+const styleLabels: Record<string, string> = {
+  minimal: "Minimal",
+  logo: "Con logo",
+  premium: "Premium",
+};
+
+const trackingSteps = [
+  "Pedido recibido",
+  "En preparación",
+  "Fabricando",
+  "Enviado",
+  "Entregado",
+];
 
 function formatDateTime(date: Date) {
   return new Intl.DateTimeFormat("es-ES", {
-    day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   }).format(date);
 }
 
 export default function PedidoDetallePage() {
   const [order, setOrder] = useState<OrderData | null>(null);
   const [completed, setCompleted] = useState(false);
+  const [trackingTimes, setTrackingTimes] = useState<Date[]>([]);
 
   useEffect(() => {
     const completedOrder = window.localStorage.getItem("nfc-order-complete");
     const savedOrder = window.localStorage.getItem("nfc-order");
-    if (completedOrder) {
-      setOrder(JSON.parse(completedOrder));
-      setCompleted(true);
-    } else if (savedOrder) {
-      setOrder(JSON.parse(savedOrder));
+    const trackingStart =
+      window.localStorage.getItem("nfc-tracking-start") ??
+      new Date().toISOString();
+
+    if (!window.localStorage.getItem("nfc-tracking-start")) {
+      window.localStorage.setItem("nfc-tracking-start", trackingStart);
+    }
+
+    try {
+      if (completedOrder) {
+        setOrder(JSON.parse(completedOrder));
+        setCompleted(true);
+      } else if (savedOrder) {
+        setOrder(JSON.parse(savedOrder));
+      }
+    } catch {
+      setOrder(null);
+    }
+
+    const base = new Date(trackingStart);
+
+    if (!Number.isNaN(base.getTime())) {
+      setTrackingTimes([
+        new Date(base),
+        new Date(base.getTime() + 10 * 60 * 1000),
+        new Date(base.getTime() + 24 * 60 * 60 * 1000),
+        new Date(base.getTime() + 2 * 24 * 60 * 60 * 1000),
+        new Date(base.getTime() + 4 * 24 * 60 * 60 * 1000),
+      ]);
     }
   }, []);
 
-
-  const getTrackingTimes = () => {
-    let stored = window.localStorage.getItem("nfc-tracking-start");
-    if (!stored) {
-      stored = new Date().toISOString();
-      window.localStorage.setItem("nfc-tracking-start", stored);
-    }
-    const base = new Date(stored);
-    if (Number.isNaN(base.getTime())) return [];
-    return [
-      new Date(base),
-      new Date(base.getTime() + 10 * 60 * 1000),
-      new Date(base.getTime() + 24 * 60 * 60 * 1000),
-      new Date(base.getTime() + 2 * 24 * 60 * 60 * 1000),
-      new Date(base.getTime() + 4 * 24 * 60 * 60 * 1000),
-    ];
-  };
-
   const total = order ? order.quantity * PRICE : 0;
-  const trackingTimes = typeof window !== "undefined" ? getTrackingTimes() : [];
 
   return (
     <main className="min-h-screen bg-white text-zinc-950">
       <nav className="flex items-center justify-between border-b border-zinc-100 px-6 py-5 md:px-12">
-        <Link href="/" className="text-2xl font-black tracking-tight">NFC.</Link>
-        <Link href="/pedidos" className="text-sm font-medium text-zinc-600 transition hover:text-black">← Mis pedidos</Link>
+        <Link href="/" className="text-2xl font-black tracking-tight">
+          NFC.
+        </Link>
+        <Link
+          href="/pedidos"
+          className="text-sm font-medium text-zinc-600 transition hover:text-black"
+        >
+          ← Mis pedidos
+        </Link>
       </nav>
+
       <section className="mx-auto max-w-5xl px-6 py-12 md:px-12 md:py-20">
         {!order ? (
           <div className="rounded-[2rem] border border-zinc-200 p-10 text-center">
             <p className="text-xl font-bold">No hay ningún pedido disponible.</p>
-            <Link href="/personalizar" className="mt-7 inline-flex rounded-full bg-black px-8 py-4 font-semibold text-white">Comprar mi tarjeta</Link>
+            <Link
+              href="/personalizar"
+              className="mt-7 inline-flex rounded-full bg-black px-8 py-4 font-semibold text-white"
+            >
+              Comprar mi tarjeta
+            </Link>
           </div>
         ) : (
           <>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">Pedido #NFC-001</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">
+              Pedido #NFC-001
+            </p>
+
             <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <h1 className="text-4xl font-black tracking-tight md:text-6xl">Tu pedido.</h1>
-                <p className="mt-3 text-lg text-zinc-600">Detalle completo de tu tarjeta NFC.</p>
+                <h1 className="text-4xl font-black tracking-tight md:text-6xl">
+                  Detalles del pedido.
+                </h1>
+                <p className="mt-3 text-lg text-zinc-600">
+                  Toda la información de tu tarjeta NFC.
+                </p>
               </div>
-              <span className="inline-flex w-fit rounded-full bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-700">Pago pendiente de conexión</span>
+
+              <span className="inline-flex w-fit rounded-full bg-emerald-50 px-4 py-2 text-sm font-bold text-emerald-700">
+                Preparando pedido
+              </span>
             </div>
 
             <div className="mt-12 grid gap-8 md:grid-cols-[1.2fr_0.8fr]">
               <div className="rounded-[2rem] border border-zinc-200 p-7 md:p-9">
-                <h2 className="text-xl font-bold">Configuración</h2>
+                <h2 className="text-xl font-bold">Detalles</h2>
+
                 <div className="mt-7 space-y-5">
-                  <div className="flex justify-between gap-6 border-b border-zinc-100 pb-5"><span className="text-zinc-500">Producto</span><span className="font-semibold">Tarjeta NFC</span></div>
-                  <div className="flex justify-between gap-6 border-b border-zinc-100 pb-5"><span className="text-zinc-500">Negocio</span><span className="font-semibold text-right">{order.businessName || "Sin nombre"}</span></div>
-                  <div className="flex justify-between gap-6 border-b border-zinc-100 pb-5"><span className="text-zinc-500">Destino</span><span className="font-semibold text-right">{order.linkType}</span></div>
-                  <div className="flex justify-between gap-6 border-b border-zinc-100 pb-5"><span className="text-zinc-500">Enlace</span><span className="max-w-[60%] truncate font-semibold text-right">{order.url}</span></div>
-                  <div className="flex justify-between gap-6"><span className="text-zinc-500">Cantidad</span><span className="font-semibold">{order.quantity}</span></div>
+                  <div className="flex justify-between gap-6 border-b border-zinc-100 pb-5">
+                    <span className="text-zinc-500">Producto</span>
+                    <span className="font-semibold">Tarjeta NFC</span>
+                  </div>
+
+                  <div className="flex justify-between gap-6 border-b border-zinc-100 pb-5">
+                    <span className="text-zinc-500">Negocio</span>
+                    <span className="text-right font-semibold">
+                      {order.businessName || "Sin nombre"}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between gap-6 border-b border-zinc-100 pb-5">
+                    <span className="text-zinc-500">Destino</span>
+                    <span className="text-right font-semibold">{order.linkType}</span>
+                  </div>
+
+                  <div className="flex justify-between gap-6 border-b border-zinc-100 pb-5">
+                    <span className="text-zinc-500">Enlace</span>
+                    <span className="max-w-[60%] truncate text-right font-semibold">
+                      {order.url || "Sin enlace"}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between gap-6 border-b border-zinc-100 pb-5">
+                    <span className="text-zinc-500">Color</span>
+                    <span className="font-semibold">
+                      {colorLabels[order.cardColor ?? "emerald"] ?? "Esmeralda"}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between gap-6 border-b border-zinc-100 pb-5">
+                    <span className="text-zinc-500">Estilo</span>
+                    <span className="font-semibold">
+                      {styleLabels[order.cardStyle ?? "minimal"] ?? "Minimal"}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between gap-6">
+                    <span className="text-zinc-500">Cantidad</span>
+                    <span className="font-semibold">{order.quantity}</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="rounded-[2rem] bg-zinc-950 p-7 text-white shadow-2xl md:p-9">
-                <p className="text-sm text-zinc-400">Resumen</p>
+              <div className="h-fit rounded-[2rem] bg-zinc-950 p-7 text-white shadow-2xl md:p-9">
+                <p className="text-sm text-zinc-400">Resumen del pedido</p>
+
                 <div className="mt-8 flex items-end justify-between gap-4">
-                  <span className="text-zinc-400">{order.quantity} × {PRICE.toFixed(2).replace(".", ",")} €</span>
-                  <span className="text-4xl font-black">{total.toFixed(2).replace(".", ",")} €</span>
+                  <span className="text-zinc-400">
+                    {order.quantity} × {PRICE.toFixed(2).replace(".", ",")} €
+                  </span>
+                  <span className="text-4xl font-black">
+                    {total.toFixed(2).replace(".", ",")} €
+                  </span>
                 </div>
-                <p className="mt-5 text-sm leading-6 text-zinc-400">El cobro real se activará cuando conectemos el proveedor de pagos.</p>
+
+                <div className="mt-6 border-t border-white/10 pt-6">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-zinc-400">Envío</span>
+                    <span>Calculado al finalizar</span>
+                  </div>
+                </div>
+
+                <p className="mt-6 text-sm leading-6 text-zinc-400">
+                  El pago real se activará cuando conectemos el proveedor de pagos.
+                </p>
               </div>
             </div>
 
             <div className="mt-8 rounded-[2rem] border border-zinc-200 p-7 md:p-9">
               <h2 className="text-xl font-bold">Seguimiento del pedido</h2>
-              <p className="mt-2 text-sm text-zinc-500">Estado actual de tu tarjeta NFC.</p>
-              <p className="mt-5 text-sm text-zinc-500">Cada cambio de estado queda registrado con su fecha y hora.</p>
+              <p className="mt-2 text-sm text-zinc-500">
+                Estado actual de tu tarjeta NFC.
+              </p>
+
               <div className="mt-8">
                 <div className="hidden items-start sm:flex">
-                  {[
-                    ["✓", "Pedido recibido", true],
-                    ["✓", "En preparación", completed],
-                    ["✓", "Fabricando", false],
-                    ["○", "Enviado", false],
-                    ["○", "Entregado", false],
-                  ].map(([icon, label, active], index, items) => (
-                    <div key={String(label)} className="flex flex-1 items-start">
-                      <div className="flex flex-1 flex-col items-center text-center">
-                        <div className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold ${active ? "bg-black text-white" : "border border-zinc-200 bg-white text-zinc-300"}`}>
-                          {icon}
+                  {trackingSteps.map((label, index) => {
+                    const active = index < (completed ? 3 : 2);
+                    const current = index === (completed ? 2 : 1);
+
+                    return (
+                      <div key={label} className="flex flex-1 items-start">
+                        <div className="flex flex-1 flex-col items-center text-center">
+                          <div
+                            className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold ${
+                              active
+                                ? "bg-black text-white"
+                                : "border border-zinc-200 bg-white text-zinc-300"
+                            }`}
+                          >
+                            {active ? "✓" : "○"}
+                          </div>
+
+                          <p
+                            className={`mt-3 text-xs font-semibold ${
+                              current ? "text-emerald-700" : active ? "text-zinc-950" : "text-zinc-400"
+                            }`}
+                          >
+                            {label}
+                          </p>
+
+                          {trackingTimes[index] && active ? (
+                            <p className="mt-1 text-[11px] text-zinc-400">
+                              {formatDateTime(trackingTimes[index])}
+                            </p>
+                          ) : null}
                         </div>
-                        <p className={`mt-3 text-xs font-semibold ${active ? "text-zinc-950" : "text-zinc-400"}`}>{label}</p>
-                        {trackingTimes[index] ? (
-                          <p className="mt-1 text-[11px] text-zinc-400">{formatDateTime(trackingTimes[index])}</p>
+
+                        {index < trackingSteps.length - 1 && (
+                          <div
+                            className={`mt-5 h-px flex-1 ${
+                              index < (completed ? 2 : 1)
+                                ? "bg-black"
+                                : "bg-zinc-200"
+                            }`}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="space-y-3 sm:hidden">
+                  {trackingSteps.map((label, index) => {
+                    const active = index < (completed ? 3 : 2);
+
+                    return (
+                      <div
+                        key={label}
+                        className={`flex items-center gap-4 rounded-2xl border p-4 ${
+                          active
+                            ? "border-zinc-200 bg-zinc-50"
+                            : "border-zinc-100"
+                        }`}
+                      >
+                        <div
+                          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
+                            active
+                              ? "bg-black text-white"
+                              : "border border-zinc-200 text-zinc-300"
+                          }`}
+                        >
+                          {active ? "✓" : "○"}
+                        </div>
+
+                        <span
+                          className={`text-sm font-semibold ${
+                            active ? "text-zinc-950" : "text-zinc-400"
+                          }`}
+                        >
+                          {label}
+                        </span>
+
+                        {trackingTimes[index] && active ? (
+                          <span className="ml-auto text-xs text-zinc-400">
+                            {formatDateTime(trackingTimes[index])}
+                          </span>
                         ) : null}
                       </div>
-                      {index < items.length - 1 && (
-                        <div className={`mt-5 h-px flex-1 ${completed && index === 0 ? "bg-black" : "bg-zinc-200"}`} />
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <div className="space-y-3 sm:hidden">
-                  {[
-                    ["✓", "Pedido recibido", true],
-                    [completed ? "✓" : "○", "En preparación", completed],
-                    ["○", "Fabricando", false],
-                    ["○", "Enviado", false],
-                    ["○", "Entregado", false],
-                  ].map(([icon, label, active]) => (
-                    <div key={String(label)} className={`flex items-center gap-4 rounded-2xl border p-4 ${active ? "border-zinc-200 bg-zinc-50" : "border-zinc-100"}`}>
-                      <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold ${active ? "bg-black text-white" : "border border-zinc-200 text-zinc-300"}`}>{icon}</div>
-                      <span className={`text-sm font-semibold ${active ? "text-zinc-950" : "text-zinc-400"}`}>{label}</span>
-                      <span className="ml-auto text-xs text-zinc-400">{trackingTimes[trackingSteps.indexOf(String(label))] ? formatDateTime(trackingTimes[trackingSteps.indexOf(String(label))]) : ""}</span>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 rounded-[2rem] border border-zinc-200 p-7 md:p-9">
-              <h2 className="text-xl font-bold">Estado del pedido</h2>
-              <div className="mt-7 grid gap-4 sm:grid-cols-4">
-                {[
-                  ["✓", "Pedido creado", true],
-                  ["✓", "Tarjeta personalizada", true],
-                  [completed ? "✓" : "○", "Pedido preparado", completed],
-                  ["○", "Pago pendiente de conexión", false],
-                ].map(([icon, label, active]) => (
-                  <div key={String(label)} className={`rounded-2xl border px-5 py-5 ${active ? "border-zinc-200 bg-zinc-50" : "border-zinc-100"}`}>
-                    <p className={`text-xl ${active ? "text-black" : "text-zinc-300"}`}>{icon}</p>
-                    <p className="mt-3 text-sm font-semibold">{label}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <Link
+              href="/pedidos"
+              className="mt-8 inline-flex rounded-full bg-zinc-950 px-8 py-4 font-semibold text-white transition hover:scale-[1.01] hover:bg-zinc-800"
+            >
+              ← Volver a mis pedidos
+            </Link>
           </>
         )}
       </section>
