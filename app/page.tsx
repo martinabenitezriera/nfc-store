@@ -74,7 +74,7 @@ export default function Home() {
               <div
                 className="absolute inset-0 overflow-hidden rounded-[2rem] bg-black p-7 text-white shadow-[0_35px_100px_rgba(0,0,0,0.42)] ring-1 ring-white/10"
                 style={{
-                  animation: "nfcCardIntro 2.5s cubic-bezier(.18,.78,.22,1) forwards, nfcCardFloat 4s ease-in-out 2.5s infinite",
+                  animation: "nfcCardIntro 2.5s cubic-bezier(.18,.78,.22,1) forwards, nfcCardFloat 5s ease-in-out 2.5s infinite",
                   transformOrigin: "center center",
                   perspective: "1000px",
                 }}
