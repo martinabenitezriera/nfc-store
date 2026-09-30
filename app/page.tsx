@@ -85,15 +85,15 @@ export default function Home() {
             </h1>
 
             <div
-              className="pointer-events-none absolute left-[calc(100%+2rem)] top-[34%] z-10 hidden h-60 w-36 md:block"
+              className="pointer-events-none absolute left-[calc(100%+3rem)] top-[30%] z-10 hidden h-64 w-40 md:block"
               aria-hidden="true"
             >
               <div
-                className="absolute -inset-5 rounded-[3rem] bg-black/15 blur-2xl"
+                className="absolute -inset-4 rounded-[1.75rem] bg-black/15 blur-2xl"
                 style={{ animation: "nfcCardGlow 2.4s cubic-bezier(.22,.8,.25,1) forwards" }}
               />
               <div
-                className="absolute inset-0 overflow-hidden rounded-[2rem] bg-black p-7 text-white shadow-[0_35px_100px_rgba(0,0,0,0.42)] ring-1 ring-white/10"
+                className="absolute inset-0 overflow-hidden rounded-[1.35rem] bg-black p-5 text-white shadow-[0_35px_100px_rgba(0,0,0,0.42)] ring-1 ring-white/10"
                 style={{
                   animation: "nfcCardIntro 2.5s cubic-bezier(.18,.78,.22,1) forwards, nfcCardFloat 5s ease-in-out 2.5s infinite",
                   transformOrigin: "center center",
@@ -102,14 +102,14 @@ export default function Home() {
               >
                 <div className="flex h-full flex-col justify-between">
                   <div className="flex items-start justify-between">
-                    <span className="text-xl font-black tracking-tight">NFC.</span>
+                    <span className="text-lg font-black tracking-tight">NFC.</span>
                     <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
                       Smart card
                     </span>
                   </div>
                   <div>
-                    <p className="text-3xl font-bold tracking-tight">Tu negocio</p>
-                    <p className="mt-1 text-sm text-zinc-400">Acerca tu móvil y conecta.</p>
+                    <p className="text-2xl font-bold tracking-tight">Tu negocio</p>
+                    <p className="mt-1 text-xs text-zinc-400">Acerca tu móvil y conecta.</p>
                   </div>
                   <div className="flex items-center justify-between text-[9px] font-medium text-zinc-500">
                     <span>WhatsApp · Web · Reviews</span>
