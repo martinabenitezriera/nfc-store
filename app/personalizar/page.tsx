@@ -18,6 +18,7 @@ export default function PersonalizarPage() {
   const [url, setUrl] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [cardColor, setCardColor] = useState("emerald");
+  const [cardStyle, setCardStyle] = useState("minimal");
 
   const cardColors = [
     { id: "emerald", label: "Esmeralda", className: "bg-gradient-to-br from-emerald-950 via-emerald-800 to-emerald-600" },
@@ -27,6 +28,27 @@ export default function PersonalizarPage() {
   ];
 
   const selectedColor = cardColors.find((item) => item.id === cardColor) ?? cardColors[0];
+
+  const cardStyles = [
+    {
+      id: "minimal",
+      label: "Minimal",
+      description: "Limpia, sencilla y elegante.",
+    },
+    {
+      id: "logo",
+      label: "Con logo",
+      description: "Destaca la identidad de tu negocio.",
+    },
+    {
+      id: "premium",
+      label: "Premium",
+      description: "Un acabado más exclusivo y sofisticado.",
+    },
+  ];
+
+  const selectedStyle =
+    cardStyles.find((item) => item.id === cardStyle) ?? cardStyles[0];
 
   const selectedType = useMemo(
     () => linkTypes.find((item) => item.id === linkType) ?? linkTypes[0],
@@ -127,6 +149,25 @@ export default function PersonalizarPage() {
                 ))}
               </div>
             </div>
+            <div>
+              <span className="mb-3 block text-sm font-semibold">Estilo de tu tarjeta</span>
+              <div className="space-y-3">
+                {cardStyles.map((style) => (
+                  <button
+                    key={style.id}
+                    type="button"
+                    onClick={() => setCardStyle(style.id)}
+                    className={`w-full rounded-2xl border p-4 text-left transition ${cardStyle === style.id ? "border-black bg-black text-white" : "border-zinc-200 hover:border-zinc-400"}`}
+                  >
+                    <span className="block font-semibold">{style.label}</span>
+                    <span className={`mt-1 block text-sm ${cardStyle === style.id ? "text-zinc-300" : "text-zinc-500"}`}>
+                      {style.description}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <label className="block">
               <span className="mb-2 block text-sm font-semibold">Cantidad</span>
               <select
@@ -153,6 +194,7 @@ export default function PersonalizarPage() {
                     url,
                     quantity,
                     cardColor,
+                    cardStyle,
                   })
                 );
                 window.location.href = "/resumen";
@@ -178,18 +220,27 @@ export default function PersonalizarPage() {
               .preview-shine { animation: previewShine 3.8s ease-in-out infinite; }
             `}</style>
 
-            <div className={`relative mt-8 flex aspect-[1.58/1] flex-col justify-between overflow-hidden rounded-[1.5rem] p-7 shadow-xl ring-1 ring-white/10 ${selectedColor.className}`}>
-              <div className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-              <div>
+            <div className={`relative mt-8 flex aspect-[1.58/1] flex-col justify-between overflow-hidden rounded-[1.5rem] p-7 shadow-xl ring-1 ring-white/10 transition-all duration-500 ${selectedColor.className} ${cardStyle === "premium" ? "ring-2 ring-white/30" : ""}`}>
+              {cardStyle !== "minimal" && (
+                <div className={`flex h-10 w-10 items-center justify-center rounded-full border text-xs font-black ${cardStyle === "premium" ? "border-white/50 bg-white/15" : "border-white/30 bg-white/10"}`}>
+                  {cardStyle === "logo" ? "LOGO" : "✦"}
+                </div>
+              )}
+
+              {cardStyle === "premium" && (
+                <div className="pointer-events-none absolute inset-0 rounded-[1.5rem] bg-gradient-to-br from-white/15 via-transparent to-black/20" />
+              )}
+
+              <div className="relative">
                 <div className="text-xl font-black tracking-tight">NFC.</div>
-                <div className="mt-2 h-px w-10 bg-white/30" />
+                <div className="mt-2 h-px w-10 bg-current opacity-30" />
               </div>
 
-              <div>
+              <div className="relative">
                 <p className="text-lg font-semibold">
                   {businessName || "Tu negocio"}
                 </p>
-                <p className="mt-1 text-sm text-zinc-400">{selectedType.label}</p>
+                <p className="mt-1 text-sm opacity-60">{selectedType.label}</p>
               </div>
             </div>
 
