@@ -134,22 +134,47 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="mt-20 grid gap-5 md:grid-cols-3">
-          {[
-            ["01", "Acerca el móvil", "Sin apps. Sin complicaciones."],
-            ["02", "Abre tu destino", "Google, WhatsApp, Instagram o tu web."],
-            ["03", "Hazlo tuyo", "Personaliza tu tarjeta y tu enlace."],
-          ].map(([number, title, description]) => (
-            <div
-              key={number}
-              className="rounded-[2rem] border border-zinc-200 p-7"
-            >
-              <p className="text-sm font-semibold text-zinc-400">{number}</p>
-              <h2 className="mt-6 text-xl font-bold">{title}</h2>
-              <p className="mt-2 leading-6 text-zinc-500">{description}</p>
-            </div>
-          ))}
-        </div>
+        <section className="mt-28 overflow-hidden rounded-[2.5rem] bg-emerald-50/70 px-6 py-12 md:px-12 md:py-16">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+              Cómo funciona
+            </p>
+            <h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">
+              Un toque. Tres pasos.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-zinc-600">
+              Tu cliente no necesita descargar nada. Solo acerca el móvil y la acción ocurre.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {[
+              ["01", "Acercar", "El cliente acerca su móvil a tu tarjeta NFC.", "⌁"],
+              ["02", "Abrir", "Se abre automáticamente tu enlace elegido.", "↗"],
+              ["03", "Conseguir", "El cliente hace la acción que buscas.", "✓"],
+            ].map(([number, title, description, icon]) => (
+              <div
+                key={number}
+                className="group relative overflow-hidden rounded-[2rem] border border-emerald-100 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-semibold text-emerald-700">{number}</span>
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-100 text-lg font-bold text-emerald-800 transition group-hover:scale-110">
+                    {icon}
+                  </span>
+                </div>
+                <h3 className="mt-10 text-2xl font-black tracking-tight">{title}</h3>
+                <p className="mt-3 leading-7 text-zinc-500">{description}</p>
+                {number !== "03" && (
+                  <div className="mt-8 hidden items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-600 md:flex">
+                    <span>Después</span>
+                    <span className="transition group-hover:translate-x-1">→</span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
       </section>
     </main>
   );
