@@ -118,7 +118,7 @@ export default function PedidosPage() {
             <div className="grid md:grid-cols-[0.75fr_1.25fr]">
               <div className="flex min-h-[310px] items-center justify-center bg-zinc-50 p-8">
                 <div
-                  className={`relative flex aspect-[1.58/1] w-full max-w-[310px] flex-col justify-between overflow-hidden rounded-[1.5rem] p-7 text-white shadow-2xl transition-all ${
+                  className={`relative flex aspect-[1.58/1] w-[280px] max-w-full shrink-0 flex-col justify-between overflow-hidden rounded-[1.5rem] p-7 text-white shadow-2xl transition-all ${
                     cardClass
                   } ${
                     order.cardStyle === "premium"
