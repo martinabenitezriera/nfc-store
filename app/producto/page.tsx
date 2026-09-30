@@ -177,10 +177,10 @@ export default function ProductoPage() {
             ].map(([number, question, answer]) => (
               <details
                 key={question}
-                className="group border-b border-zinc-200 px-6 transition-colors duration-300 last:border-b-0 open:bg-zinc-50/70 md:px-8"
+                className="group border-b border-zinc-200 px-6 last:border-b-0 md:px-8"
               >
                 <summary className="flex cursor-pointer list-none items-center gap-5 py-6 text-left [&::-webkit-details-marker]:hidden">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-xs font-bold text-zinc-500 transition duration-300 group-open:bg-emerald-100 group-open:text-emerald-700">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-xs font-bold text-zinc-500 transition-colors duration-300 group-open:bg-emerald-100 group-open:text-emerald-700">
                     {number}
                   </span>
 
@@ -188,15 +188,19 @@ export default function ProductoPage() {
                     {question}
                   </span>
 
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-zinc-200 text-lg font-light text-zinc-500 transition duration-300 group-hover:border-zinc-300 group-hover:text-zinc-900 group-open:rotate-45 group-open:border-emerald-200 group-open:bg-emerald-50 group-open:text-emerald-700">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-zinc-200 text-lg font-light text-zinc-500 transition-all duration-300 group-hover:border-zinc-300 group-hover:text-zinc-900 group-open:rotate-45 group-open:border-emerald-200 group-open:bg-emerald-50 group-open:text-emerald-700">
                     +
                   </span>
                 </summary>
 
-                <div className="pb-7 pl-14 pr-12 md:pl-14 md:pr-16">
-                  <p className="max-w-3xl text-sm leading-7 text-zinc-500 md:text-base">
-                    {answer}
-                  </p>
+                <div className="grid grid-rows-[0fr] opacity-0 transition-[grid-template-rows,opacity] duration-300 ease-out group-open:grid-rows-[1fr] group-open:opacity-100">
+                  <div className="min-h-0 overflow-hidden">
+                    <div className="pb-7 pl-14 pr-12 md:pl-14 md:pr-16">
+                      <p className="text-sm leading-7 text-zinc-500 md:text-base">
+                        {answer}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </details>
             ))}
