@@ -21,13 +21,13 @@ export default function Home() {
           75% { transform: translate3d(0, -9px, 0) rotateZ(1deg) rotateY(2deg); }
         }
 
-        @keyframes nfcCardGlow {
+        @keyframes nfcShine { 0% { transform: translateX(-180%) skewX(-12deg); opacity: 0; } 15% { opacity: 1; } 55% { opacity: .45; } 100% { transform: translateX(420%) skewX(-12deg); opacity: 0; } }\n\n        @keyframes nfcCardGlow {
           0% { opacity: 0; transform: scale(0.75); }
           45% { opacity: 0.22; transform: scale(1); }
           100% { opacity: 0.12; transform: scale(0.92); }
         }
 
-        @keyframes nfcCardPop {
+        .nfcShine { animation: nfcShine 3.8s ease-in-out 2.7s infinite; }\n\n        @keyframes nfcCardPop {
           0% {
             opacity: 0;
             transform: translate(-50%, -50%) scale(0.18) rotate(-8deg);
@@ -85,7 +85,7 @@ export default function Home() {
             </h1>
 
             <div
-              className="pointer-events-none absolute left-[calc(100%+3rem)] top-[30%] z-10 hidden h-64 w-40 md:block"
+              className="pointer-events-none absolute left-[calc(100%+3rem)] top-[30%] z-10 hidden h-72 w-44 md:block"
               aria-hidden="true"
             >
               <div
@@ -100,7 +100,7 @@ export default function Home() {
                   perspective: "1000px",
                 }}
               >
-                <div className="flex h-full flex-col justify-between">
+                <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[1.35rem]"><div className="nfcShine absolute -left-1/2 top-0 h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/25 to-transparent" /></div><div className="relative flex h-full flex-col justify-between">
                   <div className="flex items-start justify-between">
                     <span className="text-lg font-black tracking-tight">NFC.</span>
                     <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
