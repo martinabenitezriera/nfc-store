@@ -64,7 +64,7 @@ export default function Home() {
             </h1>
 
             <div
-              className="pointer-events-none absolute left-[78%] top-[44%] z-10 hidden h-72 w-44 -translate-y-1/2 md:block"
+              className="pointer-events-none absolute left-[calc(100%+2rem)] top-[34%] z-10 hidden h-60 w-36 md:block"
               aria-hidden="true"
             >
               <div
