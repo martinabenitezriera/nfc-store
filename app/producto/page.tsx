@@ -159,32 +159,45 @@ export default function ProductoPage() {
               Preguntas frecuentes
             </p>
             <h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">
-              ¿Tienes alguna duda?
+              Todo lo que necesitas saber.
             </h2>
             <p className="mt-5 text-lg leading-8 text-zinc-600">
-              Aquí tienes las respuestas a las preguntas más habituales sobre tu tarjeta NFC.
+              Resolvemos las dudas más habituales antes de que personalices tu tarjeta.
             </p>
           </div>
 
-          <div className="mt-10 divide-y divide-zinc-200 rounded-[2rem] border border-zinc-200 bg-white px-6 shadow-sm md:px-8">
+          <div className="mt-10 overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-sm">
             {[
-              ["¿Cómo funciona la tarjeta NFC?", "Solo tienes que acercar un móvil compatible con NFC a la tarjeta. Se abrirá directamente el enlace que hayas elegido, sin necesidad de descargar ninguna aplicación."],
-              ["¿Qué puedo poner en mi tarjeta?", "Puedes elegir Google Reviews, WhatsApp, Instagram, tu página web, Spotify o cualquier otro enlace que quieras compartir con tus clientes."],
-              ["¿El cliente necesita una aplicación?", "No. Tu cliente solo necesita acercar su móvil a la tarjeta. La experiencia funciona directamente desde el teléfono."],
-              ["¿Puedo personalizar la tarjeta?", "Sí. Puedes elegir el color, el estilo, el nombre de tu negocio y el destino que quieres compartir."],
-              ["¿Cuánto cuesta la tarjeta?", "El precio parte de 29,90 €. El precio final se muestra antes de completar el pedido."],
-              ["¿Puedo cambiar el enlace más adelante?", "La tarjeta se configura con el enlace elegido durante el pedido. Si necesitas cambiarlo, podremos gestionar esa modificación según el servicio disponible."],
-            ].map(([question, answer]) => (
-              <details key={question} className="group py-6">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-left text-base font-bold text-zinc-950 md:text-lg">
-                  {question}
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-zinc-500 transition group-open:rotate-45">
+              ["01", "¿Cómo funciona la tarjeta NFC?", "Solo tienes que acercar un móvil compatible con NFC a la tarjeta. Se abrirá directamente el enlace que hayas elegido, sin necesidad de descargar ninguna aplicación."],
+              ["02", "¿Qué puedo poner en mi tarjeta?", "Puedes elegir Google Reviews, WhatsApp, Instagram, tu página web, Spotify o cualquier otro enlace que quieras compartir con tus clientes."],
+              ["03", "¿El cliente necesita una aplicación?", "No. Tu cliente solo tiene que acercar su móvil a la tarjeta. La experiencia funciona directamente desde el teléfono."],
+              ["04", "¿Puedo personalizar la tarjeta?", "Sí. Puedes elegir el color, el estilo, el nombre de tu negocio y el destino que quieres compartir."],
+              ["05", "¿Cuánto cuesta la tarjeta?", "El precio parte de 29,90 €. El precio final se muestra antes de completar el pedido."],
+              ["06", "¿Puedo cambiar el enlace más adelante?", "La tarjeta se configura con el enlace elegido durante el pedido. Si necesitas cambiarlo, podremos gestionar esa modificación según el servicio disponible."],
+            ].map(([number, question, answer]) => (
+              <details
+                key={question}
+                className="group border-b border-zinc-200 px-6 transition-colors duration-300 last:border-b-0 open:bg-zinc-50/70 md:px-8"
+              >
+                <summary className="flex cursor-pointer list-none items-center gap-5 py-6 text-left [&::-webkit-details-marker]:hidden">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-xs font-bold text-zinc-500 transition duration-300 group-open:bg-emerald-100 group-open:text-emerald-700">
+                    {number}
+                  </span>
+
+                  <span className="flex-1 text-base font-bold tracking-tight text-zinc-950 md:text-lg">
+                    {question}
+                  </span>
+
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-zinc-200 text-lg font-light text-zinc-500 transition duration-300 group-hover:border-zinc-300 group-hover:text-zinc-900 group-open:rotate-45 group-open:border-emerald-200 group-open:bg-emerald-50 group-open:text-emerald-700">
                     +
                   </span>
                 </summary>
-                <p className="max-w-3xl pt-4 pr-10 text-sm leading-7 text-zinc-500 md:text-base">
-                  {answer}
-                </p>
+
+                <div className="pb-7 pl-14 pr-12 md:pl-14 md:pr-16">
+                  <p className="max-w-3xl text-sm leading-7 text-zinc-500 md:text-base">
+                    {answer}
+                  </p>
+                </div>
               </details>
             ))}
           </div>
