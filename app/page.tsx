@@ -162,34 +162,60 @@ export default function Home() {
               Para tu negocio
             </p>
             <h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">
-              Una tarjeta. Diferentes negocios.
+              Mira cómo funcionaría en tu negocio.
             </h2>
             <p className="mt-5 text-lg leading-8 text-zinc-600">
-              Adapta tu tarjeta NFC a la acción que más importa en tu negocio.
+              Cada negocio tiene una acción diferente. Aquí puedes ver un ejemplo de cómo usar la tarjeta.
             </p>
           </div>
 
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
             {[
-              ["Restaurantes", "⭐ Reseñas de Google", "Consigue más opiniones después de cada visita.", "🍽️"],
-              ["Peluquerías", "💬 WhatsApp", "Facilita reservas y consultas en un toque.", "✂️"],
-              ["Clínicas", "📅 Reservas", "Lleva a tus pacientes a pedir cita fácilmente.", "＋"],
-              ["Hoteles", "⭐ Reseñas y web", "Comparte información, reseñas o servicios.", "⌂"],
-              ["Tiendas", "📸 Instagram", "Haz que tus clientes descubran tu marca.", "▣"],
-            ].map(([business, action, description, icon]) => (
+              ["Restaurantes", "⭐ Google Reviews", "Pide una reseña justo después de la comida.", "🍽️", ["Cliente termina de comer", "Acerca el móvil", "Deja su reseña"]],
+              ["Peluquerías", "💬 WhatsApp", "Facilita reservas y consultas en un toque.", "✂️", ["Cliente termina su visita", "Acerca el móvil", "Escribe por WhatsApp"]],
+              ["Clínicas", "📅 Reservas", "Haz que pedir una cita sea mucho más fácil.", "＋", ["Paciente ve la tarjeta", "Acerca el móvil", "Pide una cita"]],
+              ["Hoteles", "⭐ Reseñas y web", "Comparte servicios, información y reseñas.", "⌂", ["Huésped necesita información", "Acerca el móvil", "Abre la información"]],
+              ["Tiendas", "📸 Instagram", "Lleva a tus clientes directamente a tu marca.", "▣", ["Cliente descubre la marca", "Acerca el móvil", "Visita Instagram"]],
+            ].map(([business, action, description, icon, steps]) => (
               <div
                 key={business}
                 className="group overflow-hidden rounded-[2rem] border border-zinc-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-xl transition duration-300 group-hover:scale-110">
-                  {icon}
+                <div className="flex items-center justify-between">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-xl transition duration-300 group-hover:scale-110">
+                    {icon}
+                  </div>
+                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-700">
+                    Demo
+                  </span>
                 </div>
+
                 <p className="mt-7 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700">
                   {business}
                 </p>
                 <h3 className="mt-2 text-xl font-black tracking-tight">{action}</h3>
                 <p className="mt-3 text-sm leading-6 text-zinc-500">{description}</p>
-                <div className="mt-6 h-1 w-10 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-16" />
+
+                <div className="mt-6 rounded-2xl bg-zinc-50 p-4">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-zinc-400">
+                    Cómo se usa
+                  </p>
+                  <div className="mt-4 space-y-3">
+                    {(steps as string[]).map((step, index) => (
+                      <div key={step} className="flex items-start gap-3">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-[10px] font-bold text-white">
+                          {index + 1}
+                        </span>
+                        <p className="pt-1 text-xs font-semibold leading-5 text-zinc-700">{step}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-5 flex items-center gap-2 text-xs font-semibold text-emerald-700">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  <span>Acercar → abrir → conseguir</span>
+                </div>
               </div>
             ))}
           </div>
