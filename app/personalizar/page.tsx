@@ -16,7 +16,8 @@ export default function PersonalizarPage() {
   const [businessName, setBusinessName] = useState("");
   const [linkType, setLinkType] = useState("google");
   const [url, setUrl] = useState("");
-  const [quantity, setQuantity] = useState(1);\n  const [cardColor, setCardColor] = useState("emerald");
+  const [quantity, setQuantity] = useState(1);
+  const [cardColor, setCardColor] = useState("emerald");
 
   const selectedType = useMemo(
     () => linkTypes.find((item) => item.id === linkType) ?? linkTypes[0],
@@ -139,9 +140,20 @@ export default function PersonalizarPage() {
 
         <div className="md:sticky md:top-8 md:self-start">
           <div className="rounded-[2rem] bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-800 p-6 text-white shadow-2xl md:p-8">
-            <p className="text-sm text-zinc-400">Vista previa</p>\n\n            <style>{`\n              @keyframes previewShine {\n                0% { transform: translateX(-180%) skewX(-15deg); opacity: 0; }\n                18% { opacity: 1; }\n                60% { opacity: .45; }\n                100% { transform: translateX(420%) skewX(-15deg); opacity: 0; }\n              }\n              .preview-shine { animation: previewShine 3.8s ease-in-out infinite; }\n            `}</style>
+            <p className="text-sm text-zinc-400">Vista previa</p>
 
-            <div className="relative mt-8 flex aspect-[1.58/1] flex-col justify-between overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-emerald-950 via-emerald-800 to-emerald-600 p-7 shadow-xl ring-1 ring-white/10">\n              <div className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            <style>{`
+              @keyframes previewShine {
+                0% { transform: translateX(-180%) skewX(-15deg); opacity: 0; }
+                18% { opacity: 1; }
+                60% { opacity: .45; }
+                100% { transform: translateX(420%) skewX(-15deg); opacity: 0; }
+              }
+              .preview-shine { animation: previewShine 3.8s ease-in-out infinite; }
+            `}</style>
+
+            <div className="relative mt-8 flex aspect-[1.58/1] flex-col justify-between overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-emerald-950 via-emerald-800 to-emerald-600 p-7 shadow-xl ring-1 ring-white/10">
+              <div className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
               <div>
                 <div className="text-xl font-black tracking-tight">NFC.</div>
                 <div className="mt-2 h-px w-10 bg-white/30" />
