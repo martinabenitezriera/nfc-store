@@ -30,10 +30,17 @@ const styleLabels: Record<string, string> = {
 const trackingSteps = [
   "Pedido recibido",
   "En preparación",
-  "Fabricando",
   "Enviado",
   "Entregado",
 ];
+
+function getTrackingStep(start: Date, now = new Date()) {
+  const elapsed = now.getTime() - start.getTime();
+
+  if (elapsed >= 4 * 24 * 60 * 60 * 1000) return 3;
+  if (elapsed >= 24 * 60 * 60 * 1000) return 2;
+  return 1;
+}
 
 function formatDateTime(date: Date) {
   return new Intl.DateTimeFormat("es-ES", {
@@ -47,7 +54,7 @@ function formatDateTime(date: Date) {
 
 export default function PedidoDetallePage() {
   const [order, setOrder] = useState<OrderData | null>(null);
-  const [completed, setCompleted] = useState(false);
+  const [trackingStep, setTrackingStep] = useState(1);
   const [trackingTimes, setTrackingTimes] = useState<Date[]>([]);
 
   useEffect(() => {
@@ -64,7 +71,6 @@ export default function PedidoDetallePage() {
     try {
       if (completedOrder) {
         setOrder(JSON.parse(completedOrder));
-        setCompleted(true);
       } else if (savedOrder) {
         setOrder(JSON.parse(savedOrder));
       }
@@ -77,11 +83,17 @@ export default function PedidoDetallePage() {
     if (!Number.isNaN(base.getTime())) {
       setTrackingTimes([
         new Date(base),
-        new Date(base.getTime() + 10 * 60 * 1000),
+        new Date(base),
         new Date(base.getTime() + 24 * 60 * 60 * 1000),
-        new Date(base.getTime() + 2 * 24 * 60 * 60 * 1000),
         new Date(base.getTime() + 4 * 24 * 60 * 60 * 1000),
       ]);
+      setTrackingStep(getTrackingStep(base));
+
+      const interval = window.setInterval(() => {
+        setTrackingStep(getTrackingStep(base));
+      }, 30000);
+
+      return () => window.clearInterval(interval);
     }
   }, []);
 
@@ -129,7 +141,7 @@ export default function PedidoDetallePage() {
               </div>
 
               <span className="inline-flex w-fit rounded-full bg-emerald-50 px-4 py-2 text-sm font-bold text-emerald-700">
-                Preparando pedido
+                {trackingSteps[trackingStep]}
               </span>
             </div>
 
@@ -217,8 +229,8 @@ export default function PedidoDetallePage() {
               <div className="mt-8">
                 <div className="hidden items-start sm:flex">
                   {trackingSteps.map((label, index) => {
-                    const active = index < (completed ? 3 : 2);
-                    const current = index === (completed ? 2 : 1);
+                    const active = index <= trackingStep;
+                    const current = index === trackingStep;
 
                     return (
                       <div key={label} className="flex flex-1 items-start">
@@ -251,7 +263,7 @@ export default function PedidoDetallePage() {
                         {index < trackingSteps.length - 1 && (
                           <div
                             className={`mt-5 h-px flex-1 ${
-                              index < (completed ? 2 : 1)
+                              index < trackingStep
                                 ? "bg-black"
                                 : "bg-zinc-200"
                             }`}
@@ -264,7 +276,7 @@ export default function PedidoDetallePage() {
 
                 <div className="space-y-3 sm:hidden">
                   {trackingSteps.map((label, index) => {
-                    const active = index < (completed ? 3 : 2);
+                    const active = index <= trackingStep;
 
                     return (
                       <div
