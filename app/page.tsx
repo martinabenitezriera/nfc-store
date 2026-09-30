@@ -6,6 +6,28 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white text-zinc-950">
       <style>{`
+        @keyframes demoPhone {
+          0%, 28% { transform: translateX(-55px) rotate(-4deg); }
+          45%, 68% { transform: translateX(0) rotate(0deg); }
+          82%, 100% { transform: translateX(18px) rotate(0deg); }
+        }
+
+        @keyframes demoPulse {
+          0%, 28%, 100% { opacity: 0; transform: scale(.7); }
+          42%, 65% { opacity: .55; transform: scale(1); }
+        }
+
+        @keyframes demoScreen {
+          0%, 40% { opacity: .2; transform: scale(.96); }
+          52%, 78% { opacity: 1; transform: scale(1); }
+          90%, 100% { opacity: .35; transform: scale(.98); }
+        }
+
+        @keyframes demoCheck {
+          0%, 78% { opacity: 0; transform: scale(.5); }
+          88%, 100% { opacity: 1; transform: scale(1); }
+        }
+
         @keyframes nfcCardIntro {
           0% { opacity: 0; transform: translate3d(80px, 70px, 0) rotateZ(-14deg) rotateY(-18deg) scale(1.45); }
           35% { opacity: 1; transform: translate3d(-12px, -18px, 0) rotateZ(8deg) rotateY(10deg) scale(1.12); }
@@ -145,6 +167,56 @@ export default function Home() {
             <p className="mt-5 text-lg leading-8 text-zinc-600">
               Tu cliente no necesita descargar nada. Solo acerca el móvil y la acción ocurre.
             </p>
+          </div>
+
+          <div className="mt-12 overflow-hidden rounded-[2rem] border border-emerald-100 bg-white p-6 shadow-sm md:p-8">
+            <div className="grid items-center gap-10 md:grid-cols-[1fr_auto_1fr]">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-emerald-700">La experiencia</p>
+                <h3 className="mt-3 text-2xl font-black tracking-tight">Del toque a la acción.</h3>
+                <p className="mt-3 max-w-md leading-7 text-zinc-500">
+                  Una pequeña demostración de lo que vive tu cliente al usar la tarjeta.
+                </p>
+              </div>
+
+              <div className="relative mx-auto h-72 w-56">
+                <div className="absolute left-1/2 top-1/2 h-52 w-28 -translate-x-1/2 -translate-y-1/2 rounded-[1.7rem] bg-zinc-950 p-2 shadow-2xl"
+                  style={{ animation: "demoPhone 5.5s ease-in-out infinite" }}>
+                  <div className="relative flex h-full flex-col overflow-hidden rounded-[1.35rem] bg-white">
+                    <div className="mx-auto mt-2 h-1 w-12 rounded-full bg-zinc-200" />
+                    <div className="flex flex-1 flex-col items-center justify-center px-3 text-center">
+                      <div className="h-12 w-12 rounded-2xl bg-emerald-100 text-2xl flex items-center justify-center">⭐</div>
+                      <p className="mt-3 text-xs font-bold text-zinc-900" style={{ animation: "demoScreen 5.5s ease-in-out infinite" }}>Google Reviews</p>
+                      <p className="mt-1 text-[9px] text-zinc-400" style={{ animation: "demoScreen 5.5s ease-in-out infinite" }}>Café Central</p>
+                      <div className="mt-5 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-white text-sm font-bold"
+                        style={{ animation: "demoCheck 5.5s ease-in-out infinite" }}>✓</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-emerald-300"
+                  style={{ animation: "demoPulse 5.5s ease-in-out infinite" }} />
+                <div className="absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-200"
+                  style={{ animation: "demoPulse 5.5s ease-in-out infinite 0.15s" }} />
+                <div className="absolute bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-800">
+                  Acerca · abre · acción
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="rounded-2xl bg-emerald-50 p-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.15em] text-emerald-700">01 · Acercar</p>
+                  <p className="mt-2 font-bold">El móvil detecta la tarjeta.</p>
+                </div>
+                <div className="rounded-2xl bg-zinc-50 p-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.15em] text-zinc-500">02 · Abrir</p>
+                  <p className="mt-2 font-bold">Se abre tu destino.</p>
+                </div>
+                <div className="rounded-2xl bg-zinc-50 p-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.15em] text-zinc-500">03 · Conseguir</p>
+                  <p className="mt-2 font-bold">El cliente completa la acción.</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="mt-12 grid gap-5 md:grid-cols-3">
