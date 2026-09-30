@@ -71,9 +71,10 @@ export default function PersonalizarPage() {
 
       <section className="mx-auto grid max-w-6xl gap-12 px-6 py-12 md:grid-cols-2 md:px-12 md:py-20">
         <div>
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">
-            Paso 1 · Personalización
-          </p>
+          <div className="mb-5 flex items-center gap-3 text-sm font-semibold text-zinc-500">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-xs text-white">1</span>
+            <span>Paso 1 de 3 · Personalización</span>
+          </div>
           <h1 className="text-4xl font-black tracking-tight md:text-6xl">
             Crea tu tarjeta.
           </h1>
@@ -88,7 +89,7 @@ export default function PersonalizarPage() {
                 value={businessName}
                 onChange={(event) => setBusinessName(event.target.value)}
                 placeholder="Ej. Café Madrid"
-                className="w-full rounded-2xl border border-zinc-200 px-5 py-4 outline-none transition focus:border-black"
+                className="w-full rounded-2xl border border-zinc-200 px-5 py-4 outline-none transition focus:border-emerald-600 focus:ring-4 focus:ring-emerald-50"
               />
             </label>
 
@@ -126,7 +127,7 @@ export default function PersonalizarPage() {
                 onChange={(event) => setUrl(event.target.value)}
                 placeholder="https://..."
                 type="url"
-                className="w-full rounded-2xl border border-zinc-200 px-5 py-4 outline-none transition focus:border-black"
+                className="w-full rounded-2xl border border-zinc-200 px-5 py-4 outline-none transition focus:border-emerald-600 focus:ring-4 focus:ring-emerald-50"
               />
               <span className="mt-2 block text-sm text-zinc-500">
                 Este será el enlace que abrirá la tarjeta NFC.
@@ -151,7 +152,7 @@ export default function PersonalizarPage() {
             </div>
             <div>
               <span className="mb-3 block text-sm font-semibold">Estilo de tu tarjeta</span>
-              <div className="space-y-3">
+              <div className="grid gap-3 md:grid-cols-3">
                 {cardStyles.map((style) => (
                   <button
                     key={style.id}
@@ -173,7 +174,7 @@ export default function PersonalizarPage() {
               <select
                 value={quantity}
                 onChange={(event) => setQuantity(Number(event.target.value))}
-                className="w-full rounded-2xl border border-zinc-200 bg-white px-5 py-4 outline-none focus:border-black"
+                className="w-full rounded-2xl border border-zinc-200 bg-white px-5 py-4 outline-none focus:border-emerald-600 focus:ring-4 focus:ring-emerald-50"
               >
                 {[1, 2, 3, 5, 10, 25, 50, 100].map((amount) => (
                   <option key={amount} value={amount}>
@@ -199,7 +200,7 @@ export default function PersonalizarPage() {
                 );
                 window.location.href = "/resumen";
               }}
-              className="w-full rounded-full bg-black px-8 py-4 font-semibold text-white transition hover:scale-[1.01]"
+              className="w-full rounded-full bg-black px-8 py-4 font-semibold text-white shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl"
             >
               Continuar con el pedido
             </button>
@@ -207,8 +208,8 @@ export default function PersonalizarPage() {
         </div>
 
         <div className="md:sticky md:top-8 md:self-start">
-          <div className="rounded-[2rem] bg-gradient-to-br from-emerald-950 via-emerald-900 to-emerald-800 p-6 text-white shadow-2xl md:p-8">
-            <p className="text-sm text-zinc-400">Vista previa</p>
+          <div className="rounded-[2rem] bg-zinc-950 p-6 text-white shadow-2xl md:p-8">
+            <div className="flex items-center justify-between"><div><p className="text-sm font-semibold text-white">Vista previa</p><p className="mt-1 text-xs text-zinc-500">Así quedará tu tarjeta</p></div><span className="rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-zinc-400">En directo</span></div>
 
             <style>{`
               @keyframes previewShine {
@@ -257,9 +258,7 @@ export default function PersonalizarPage() {
               </div>
             </div>
 
-            <p className="mt-6 text-sm leading-6 text-zinc-400">
-              Después conectaremos este formulario con Shopify para crear el pedido y gestionar el pago.
-            </p>
+            <div className="mt-6 flex items-start gap-3 text-sm leading-6 text-zinc-400"><span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-400">✓</span><p>Tu configuración se guardará antes de pasar al resumen del pedido.</p></div>
           </div>
         </div>
       </section>
