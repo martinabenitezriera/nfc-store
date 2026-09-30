@@ -6,6 +6,27 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white text-zinc-950">
       <style>{`
+        @keyframes nfcCardIntro {
+          0% { opacity: 0; transform: translate3d(80px, 70px, 0) rotateZ(-14deg) rotateY(-18deg) scale(1.45); }
+          35% { opacity: 1; transform: translate3d(-12px, -18px, 0) rotateZ(8deg) rotateY(10deg) scale(1.12); }
+          60% { transform: translate3d(8px, 8px, 0) rotateZ(-5deg) rotateY(-6deg) scale(0.96); }
+          80% { transform: translate3d(-3px, -4px, 0) rotateZ(3deg) rotateY(4deg) scale(0.90); }
+          100% { opacity: 1; transform: translate3d(0, 0, 0) rotateZ(-2deg) rotateY(0deg) scale(0.88); }
+        }
+
+        @keyframes nfcCardFloat {
+          0%, 100% { transform: translate3d(0, 0, 0) rotateZ(-2deg) rotateY(0deg); }
+          25% { transform: translate3d(0, -12px, 0) rotateZ(1.5deg) rotateY(3deg); }
+          50% { transform: translate3d(0, -20px, 0) rotateZ(-1.5deg) rotateY(-3deg); }
+          75% { transform: translate3d(0, -9px, 0) rotateZ(1deg) rotateY(2deg); }
+        }
+
+        @keyframes nfcCardGlow {
+          0% { opacity: 0; transform: scale(0.75); }
+          45% { opacity: 0.22; transform: scale(1); }
+          100% { opacity: 0.12; transform: scale(0.92); }
+        }
+
         @keyframes nfcCardPop {
           0% {
             opacity: 0;
