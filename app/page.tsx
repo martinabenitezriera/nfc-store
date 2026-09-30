@@ -64,7 +64,7 @@ export default function Home() {
             </h1>
 
             <div
-              className="pointer-events-none absolute left-[72%] top-1/2 z-10 hidden h-48 w-72 -translate-y-1/2 md:block"
+              className="pointer-events-none absolute left-[68%] top-1/2 z-10 hidden h-[30rem] w-56 -translate-y-1/2 md:block"
               aria-hidden="true"
             >
               <div
@@ -72,10 +72,11 @@ export default function Home() {
                 style={{ animation: "nfcCardGlow 2.4s cubic-bezier(.22,.8,.25,1) forwards" }}
               />
               <div
-                className="absolute inset-0 overflow-hidden rounded-[1.8rem] bg-black p-6 text-white shadow-[0_35px_90px_rgba(0,0,0,0.38)] ring-1 ring-white/10"
+                className="absolute inset-0 overflow-hidden rounded-[2rem] bg-black p-7 text-white shadow-[0_35px_100px_rgba(0,0,0,0.42)] ring-1 ring-white/10"
                 style={{
-                  animation: "nfcCardIntro 2.4s cubic-bezier(.18,.78,.22,1) forwards",
+                  animation: "nfcCardIntro 2.5s cubic-bezier(.18,.78,.22,1) forwards, nfcCardFloat 4s ease-in-out 2.5s infinite",
                   transformOrigin: "center center",
+                  perspective: "1000px",
                 }}
               >
                 <div className="flex h-full flex-col justify-between">
@@ -86,8 +87,8 @@ export default function Home() {
                     </span>
                   </div>
                   <div>
-                    <p className="text-2xl font-bold tracking-tight">Tu negocio</p>
-                    <p className="mt-1 text-xs text-zinc-400">Acerca tu móvil y conecta.</p>
+                    <p className="text-3xl font-bold tracking-tight">Tu negocio</p>
+                    <p className="mt-1 text-sm text-zinc-400">Acerca tu móvil y conecta.</p>
                   </div>
                   <div className="flex items-center justify-between text-[9px] font-medium text-zinc-500">
                     <span>WhatsApp · Web · Reviews</span>
