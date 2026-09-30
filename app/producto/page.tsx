@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 
 export default function ProductoPage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
   return (
     <main className="min-h-screen bg-white text-zinc-950">
       <nav className="flex items-center justify-between border-b border-zinc-100 px-6 py-5 md:px-12">
@@ -174,36 +177,61 @@ export default function ProductoPage() {
               ["04", "¿Puedo personalizar la tarjeta?", "Sí. Puedes elegir el color, el estilo, el nombre de tu negocio y el destino que quieres compartir."],
               ["05", "¿Cuánto cuesta la tarjeta?", "El precio parte de 29,90 €. El precio final se muestra antes de completar el pedido."],
               ["06", "¿Puedo cambiar el enlace más adelante?", "La tarjeta se configura con el enlace elegido durante el pedido. Si necesitas cambiarlo, podremos gestionar esa modificación según el servicio disponible."],
-            ].map(([number, question, answer]) => (
-              <details
-                key={question}
-                className="group border-b border-zinc-200 px-6 last:border-b-0 md:px-8"
-              >
-                <summary className="flex cursor-pointer list-none items-center gap-5 py-6 text-left [&::-webkit-details-marker]:hidden">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-xs font-bold text-zinc-500 transition-colors duration-300 group-open:bg-emerald-100 group-open:text-emerald-700">
-                    {number}
-                  </span>
+            ].map(([number, question, answer], index) => {
+              const isOpen = openFaq === index;
 
-                  <span className="flex-1 text-base font-bold tracking-tight text-zinc-950 md:text-lg">
-                    {question}
-                  </span>
+              return (
+                <div
+                  key={question}
+                  className="border-b border-zinc-200 px-6 last:border-b-0 md:px-8"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(isOpen ? null : index)}
+                    aria-expanded={isOpen}
+                    className="flex w-full items-center gap-5 py-6 text-left"
+                  >
+                    <span
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors duration-300 ${
+                        isOpen
+                          ? "bg-emerald-100 text-emerald-700"
+                          : "bg-zinc-100 text-zinc-500"
+                      }`}
+                    >
+                      {number}
+                    </span>
 
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-zinc-200 text-lg font-light text-zinc-500 transition-all duration-300 group-hover:border-zinc-300 group-hover:text-zinc-900 group-open:rotate-45 group-open:border-emerald-200 group-open:bg-emerald-50 group-open:text-emerald-700">
-                    +
-                  </span>
-                </summary>
+                    <span className="flex-1 text-base font-bold tracking-tight text-zinc-950 md:text-lg">
+                      {question}
+                    </span>
 
-                <div className="grid grid-rows-[0fr] opacity-0 transition-[grid-template-rows,opacity] duration-300 ease-out group-open:grid-rows-[1fr] group-open:opacity-100">
-                  <div className="min-h-0 overflow-hidden">
-                    <div className="pb-7 pl-14 pr-12 md:pl-14 md:pr-16">
-                      <p className="text-sm leading-7 text-zinc-500 md:text-base">
-                        {answer}
-                      </p>
+                    <span
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-lg font-light transition-all duration-300 ${
+                        isOpen
+                          ? "rotate-45 border-emerald-200 bg-emerald-50 text-emerald-700"
+                          : "border-zinc-200 text-zinc-500"
+                      }`}
+                    >
+                      +
+                    </span>
+                  </button>
+
+                  <div
+                    className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    }`}
+                  >
+                    <div className="min-h-0 overflow-hidden">
+                      <div className="pb-7 pl-14 pr-12 md:pl-14 md:pr-16">
+                        <p className="text-sm leading-7 text-zinc-500 md:text-base">
+                          {answer}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </details>
-            ))}
+              );
+            })}
           </div>
         </section>
 
