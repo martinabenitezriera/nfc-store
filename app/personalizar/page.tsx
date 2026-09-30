@@ -19,6 +19,15 @@ export default function PersonalizarPage() {
   const [quantity, setQuantity] = useState(1);
   const [cardColor, setCardColor] = useState("emerald");
 
+  const cardColors = [
+    { id: "emerald", label: "Esmeralda", className: "bg-gradient-to-br from-emerald-950 via-emerald-800 to-emerald-600" },
+    { id: "black", label: "Negra", className: "bg-gradient-to-br from-zinc-950 via-zinc-800 to-zinc-600" },
+    { id: "blue", label: "Azul", className: "bg-gradient-to-br from-slate-950 via-blue-900 to-blue-600" },
+    { id: "white", label: "Blanca", className: "bg-gradient-to-br from-white via-zinc-100 to-zinc-300 text-zinc-950" },
+  ];
+
+  const selectedColor = cardColors.find((item) => item.id === cardColor) ?? cardColors[0];
+
   const selectedType = useMemo(
     () => linkTypes.find((item) => item.id === linkType) ?? linkTypes[0],
     [linkType]
@@ -62,7 +71,7 @@ export default function PersonalizarPage() {
             </label>
 
             <div>
-              <span className="mb-3 block text-sm font-semibold">¿Qué quieres compartir?</span>
+              <span className="mb-3 block text-sm font-semibold">¿Qué quieres conseguir?</span>
               <div className="grid gap-3 sm:grid-cols-2">
                 {linkTypes.map((item) => (
                   <button
@@ -102,6 +111,22 @@ export default function PersonalizarPage() {
               </span>
             </label>
 
+            <div>
+              <span className="mb-3 block text-sm font-semibold">Color de tu tarjeta</span>
+              <div className="grid grid-cols-2 gap-3">
+                {cardColors.map((color) => (
+                  <button
+                    key={color.id}
+                    type="button"
+                    onClick={() => setCardColor(color.id)}
+                    className={`rounded-2xl border p-3 text-left transition ${cardColor === color.id ? "border-black ring-2 ring-black ring-offset-2" : "border-zinc-200 hover:border-zinc-400"}`}
+                  >
+                    <span className={`mb-2 block h-10 rounded-xl ${color.className}`} />
+                    <span className="text-sm font-semibold">{color.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
             <label className="block">
               <span className="mb-2 block text-sm font-semibold">Cantidad</span>
               <select
@@ -127,6 +152,7 @@ export default function PersonalizarPage() {
                     linkType: selectedType.label,
                     url,
                     quantity,
+                    cardColor,
                   })
                 );
                 window.location.href = "/resumen";
@@ -152,7 +178,7 @@ export default function PersonalizarPage() {
               .preview-shine { animation: previewShine 3.8s ease-in-out infinite; }
             `}</style>
 
-            <div className="relative mt-8 flex aspect-[1.58/1] flex-col justify-between overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-emerald-950 via-emerald-800 to-emerald-600 p-7 shadow-xl ring-1 ring-white/10">
+            <div className={`relative mt-8 flex aspect-[1.58/1] flex-col justify-between overflow-hidden rounded-[1.5rem] p-7 shadow-xl ring-1 ring-white/10 ${selectedColor.className}`}>
               <div className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
               <div>
                 <div className="text-xl font-black tracking-tight">NFC.</div>
