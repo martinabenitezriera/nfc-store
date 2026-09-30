@@ -153,6 +153,43 @@ export default function ProductoPage() {
           </div>
         </section>
 
+        <section className="mt-28">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+              Preguntas frecuentes
+            </p>
+            <h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">
+              ¿Tienes alguna duda?
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-zinc-600">
+              Aquí tienes las respuestas a las preguntas más habituales sobre tu tarjeta NFC.
+            </p>
+          </div>
+
+          <div className="mt-10 divide-y divide-zinc-200 rounded-[2rem] border border-zinc-200 bg-white px-6 shadow-sm md:px-8">
+            {[
+              ["¿Cómo funciona la tarjeta NFC?", "Solo tienes que acercar un móvil compatible con NFC a la tarjeta. Se abrirá directamente el enlace que hayas elegido, sin necesidad de descargar ninguna aplicación."],
+              ["¿Qué puedo poner en mi tarjeta?", "Puedes elegir Google Reviews, WhatsApp, Instagram, tu página web, Spotify o cualquier otro enlace que quieras compartir con tus clientes."],
+              ["¿El cliente necesita una aplicación?", "No. Tu cliente solo necesita acercar su móvil a la tarjeta. La experiencia funciona directamente desde el teléfono."],
+              ["¿Puedo personalizar la tarjeta?", "Sí. Puedes elegir el color, el estilo, el nombre de tu negocio y el destino que quieres compartir."],
+              ["¿Cuánto cuesta la tarjeta?", "El precio parte de 29,90 €. El precio final se muestra antes de completar el pedido."],
+              ["¿Puedo cambiar el enlace más adelante?", "La tarjeta se configura con el enlace elegido durante el pedido. Si necesitas cambiarlo, podremos gestionar esa modificación según el servicio disponible."],
+            ].map(([question, answer]) => (
+              <details key={question} className="group py-6">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-left text-base font-bold text-zinc-950 md:text-lg">
+                  {question}
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-zinc-500 transition group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <p className="max-w-3xl pt-4 pr-10 text-sm leading-7 text-zinc-500 md:text-base">
+                  {answer}
+                </p>
+              </details>
+            ))}
+          </div>
+        </section>
+
         <section className="mt-24 rounded-[2.5rem] bg-emerald-50/70 px-6 py-12 text-center md:px-12 md:py-16">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
             Empieza ahora
