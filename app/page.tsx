@@ -64,11 +64,11 @@ export default function Home() {
             </h1>
 
             <div
-              className="pointer-events-none absolute left-[68%] top-1/2 z-10 hidden h-[30rem] w-56 -translate-y-1/2 md:block"
+              className="pointer-events-none absolute left-[78%] top-[44%] z-10 hidden h-72 w-44 -translate-y-1/2 md:block"
               aria-hidden="true"
             >
               <div
-                className="absolute -inset-8 rounded-[3rem] bg-black/20 blur-3xl"
+                className="absolute -inset-5 rounded-[3rem] bg-black/15 blur-2xl"
                 style={{ animation: "nfcCardGlow 2.4s cubic-bezier(.22,.8,.25,1) forwards" }}
               />
               <div
