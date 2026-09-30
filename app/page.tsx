@@ -1,11 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 
 export default function Home() {
-  const [showCard, setShowCard] = useState(false);
-
   return (
     <main className="min-h-screen bg-white text-zinc-950">
       <style>{`
@@ -61,60 +58,44 @@ export default function Home() {
 
           <div className="relative">
             <h1 className="mt-5 text-5xl font-black tracking-tight md:text-7xl">
-              <span className="inline-flex items-center gap-3">
-                Tu negocio.
-                <button
-                  type="button"
-                  aria-label="Ver cómo aparece tu tarjeta NFC"
-                  onClick={() => setShowCard(true)}
-                  className="group mt-2 inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-500 shadow-sm transition hover:-translate-y-0.5 hover:border-zinc-400 hover:text-black md:h-12 md:w-12"
-                >
-                  <span className="text-lg transition-transform duration-300 group-hover:scale-110">
-                    ✦
-                  </span>
-                </button>
-              </span>
+              Tu negocio.
               <br />
               Un toque.
             </h1>
 
-            {showCard && (
-              <button
-                type="button"
-                aria-label="Cerrar animación"
-                onClick={() => setShowCard(false)}
-                className="fixed inset-0 z-50 cursor-pointer bg-black/5 backdrop-blur-[1px]"
+            <div
+              className="pointer-events-none absolute left-[72%] top-1/2 z-10 hidden h-48 w-72 -translate-y-1/2 md:block"
+              aria-hidden="true"
+            >
+              <div
+                className="absolute -inset-8 rounded-[3rem] bg-black/20 blur-3xl"
+                style={{ animation: "nfcCardGlow 2.4s cubic-bezier(.22,.8,.25,1) forwards" }}
+              />
+              <div
+                className="absolute inset-0 overflow-hidden rounded-[1.8rem] bg-black p-6 text-white shadow-[0_35px_90px_rgba(0,0,0,0.38)] ring-1 ring-white/10"
+                style={{
+                  animation: "nfcCardIntro 2.4s cubic-bezier(.18,.78,.22,1) forwards",
+                  transformOrigin: "center center",
+                }}
               >
-                <span
-                  className="absolute left-1/2 top-1/2 h-56 w-80 rounded-[2rem] border border-white/70 bg-white p-7 text-left shadow-[0_30px_100px_rgba(0,0,0,0.22)] md:h-64 md:w-[28rem]"
-                  style={{
-                    animation: "nfcCardPop 2.2s cubic-bezier(.22,.8,.25,1) forwards",
-                  }}
-                >
-                  <span className="absolute -inset-10 -z-10 rounded-full bg-zinc-400/20 blur-3xl"
-                    style={{ animation: "nfcGlow 2.2s ease-out forwards" }}
-                  />
-                  <span className="flex h-full flex-col justify-between">
-                    <span className="flex items-start justify-between">
-                      <span className="text-lg font-black tracking-tight">NFC.</span>
-                      <span className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-400">
-                        Smart card
-                      </span>
+                <div className="flex h-full flex-col justify-between">
+                  <div className="flex items-start justify-between">
+                    <span className="text-xl font-black tracking-tight">NFC.</span>
+                    <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                      Smart card
                     </span>
-                    <span>
-                      <span className="block text-2xl font-bold">Tu negocio</span>
-                      <span className="mt-1 block text-sm text-zinc-500">
-                        Acerca tu móvil y conecta.
-                      </span>
-                    </span>
-                    <span className="flex items-center justify-between text-xs font-medium text-zinc-400">
-                      <span>WhatsApp · Web · Reviews</span>
-                      <span className="text-lg text-black">⌁</span>
-                    </span>
-                  </span>
-                </span>
-              </button>
-            )}
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold tracking-tight">Tu negocio</p>
+                    <p className="mt-1 text-xs text-zinc-400">Acerca tu móvil y conecta.</p>
+                  </div>
+                  <div className="flex items-center justify-between text-[9px] font-medium text-zinc-500">
+                    <span>WhatsApp · Web · Reviews</span>
+                    <span className="text-base text-white">⌁</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <p className="mt-7 max-w-2xl text-lg leading-8 text-zinc-600 md:text-xl">
