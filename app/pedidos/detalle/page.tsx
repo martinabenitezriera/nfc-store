@@ -56,6 +56,8 @@ export default function PedidoDetallePage() {
   const [order, setOrder] = useState<OrderData | null>(null);
   const [trackingStep, setTrackingStep] = useState(1);
   const [trackingTimes, setTrackingTimes] = useState<Date[]>([]);
+  const [isTestingNfc, setIsTestingNfc] = useState(false);
+  const [nfcTested, setNfcTested] = useState(false);
 
   useEffect(() => {
     const completedOrder = window.localStorage.getItem("nfc-order-complete");
@@ -352,6 +354,70 @@ export default function PedidoDetallePage() {
                     {order.url || "Sin enlace"}
                   </p>
                 </div>
+              </div>
+            </div>
+
+            <div className="mt-8 rounded-[2rem] border border-zinc-200 p-7 md:p-9">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
+                Prueba NFC
+              </p>
+              <h2 className="mt-3 text-2xl font-black tracking-tight md:text-3xl">
+                Simula cómo funcionará tu tarjeta.
+              </h2>
+              <p className="mt-3 leading-7 text-zinc-600">
+                Acerca el móvil virtualmente a la tarjeta para comprobar la experiencia antes de recibirla.
+              </p>
+
+              <div className="mt-7 overflow-hidden rounded-[1.75rem] bg-zinc-950 p-6">
+                <div className="flex min-h-[250px] flex-col items-center justify-center">
+                  <div className={`relative flex h-36 w-24 items-center justify-center rounded-[1.5rem] border border-white/15 bg-gradient-to-br from-emerald-400 via-emerald-600 to-emerald-900 shadow-2xl transition duration-700 ${isTestingNfc ? "translate-y-8 rotate-3 scale-95" : ""}`}>
+                    <span className="relative text-xs font-black tracking-widest text-white">NFC.</span>
+                    {isTestingNfc ? (
+                      <span className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-white text-emerald-700 shadow-lg">
+                        ✓
+                      </span>
+                    ) : null}
+                  </div>
+
+                  <div className={`mt-3 h-28 w-20 rounded-[1.4rem] border-2 border-white/20 bg-white/10 p-2 transition duration-700 ${isTestingNfc ? "-translate-y-24 opacity-100" : "translate-y-2 opacity-80"}`}>
+                    <div className="h-full rounded-[1rem] bg-white p-2">
+                      <div className="mx-auto mt-2 h-2 w-8 rounded-full bg-zinc-200" />
+                      <div className="mt-5 h-9 rounded-lg bg-emerald-50" />
+                      <div className="mt-2 h-2 w-10 rounded bg-zinc-100" />
+                    </div>
+                  </div>
+
+                  <div className={`mt-4 text-center text-xs font-semibold ${nfcTested ? "text-emerald-300" : "text-zinc-500"}`}>
+                    {nfcTested ? "¡Enlace detectado! Tu tarjeta funciona." : isTestingNfc ? "Detectando NFC…" : "Pulsa para probar"}
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsTestingNfc(true);
+                    setNfcTested(false);
+                    window.setTimeout(() => {
+                      setIsTestingNfc(false);
+                      setNfcTested(true);
+                    }, 1200);
+                  }}
+                  className="mt-5 w-full rounded-full bg-white px-6 py-4 text-sm font-bold text-zinc-950 transition hover:-translate-y-0.5 hover:bg-emerald-50 disabled:cursor-wait disabled:opacity-70"
+                  disabled={isTestingNfc}
+                >
+                  {isTestingNfc ? "Probando tarjeta…" : "Probar mi tarjeta"}
+                </button>
+
+                {nfcTested && order.url ? (
+                  <a
+                    href={order.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-3 flex w-full items-center justify-center rounded-full border border-white/15 px-6 py-4 text-sm font-bold text-white transition hover:bg-white/10"
+                  >
+                    Abrir el enlace
+                  </a>
+                ) : null}
               </div>
             </div>
 
