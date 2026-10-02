@@ -28,10 +28,10 @@ const styleLabels: Record<string, string> = {
 };
 
 const trackingSteps = [
-  "Pedido recibido",
-  "Preparando",
-  "Enviado",
-  "Entregado",
+  { label: "Pedido recibido", description: "Hemos recibido tu pedido y toda la configuración de tu tarjeta." },
+  { label: "Preparando", description: "Estamos preparando tu tarjeta NFC con las opciones que elegiste." },
+  { label: "Enviado", description: "Tu tarjeta ha salido y ya está en camino hacia ti." },
+  { label: "Entregado", description: "Tu tarjeta ha llegado. Ya puedes empezar a usarla." },
 ];
 
 function getTrackingStep(start: Date, now = new Date()) {
@@ -143,7 +143,7 @@ export default function PedidoDetallePage() {
               </div>
 
               <span className="inline-flex w-fit rounded-full bg-emerald-50 px-4 py-2 text-sm font-bold text-emerald-700">
-                {trackingSteps[trackingStep]}
+                {trackingSteps[trackingStep].label}
               </span>
             </div>
 
@@ -229,13 +229,29 @@ export default function PedidoDetallePage() {
               </p>
 
               <div className="mt-8">
+                <div className="mb-6 rounded-2xl bg-zinc-50 p-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-400">Estado actual</p>
+                  <p className="mt-2 text-lg font-black text-zinc-950">{trackingSteps[trackingStep].label}</p>
+                  <p className="mt-1 text-sm leading-6 text-zinc-500">{trackingSteps[trackingStep].description}</p>
+                  {trackingTimes[trackingStep] ? (
+                    <p className="mt-3 text-xs font-medium text-zinc-400">
+                      Actualizado el {formatDateTime(trackingTimes[trackingStep])}
+                    </p>
+                  ) : null}
+                </div>
+                <div className="mb-8 h-2 overflow-hidden rounded-full bg-zinc-100">
+                  <div
+                    className="h-full rounded-full bg-emerald-500 transition-all duration-700"
+                    style={{ width: `${(trackingStep / (trackingSteps.length - 1)) * 100}%` }}
+                  />
+                </div>
                 <div className="hidden items-start sm:flex">
-                  {trackingSteps.map((label, index) => {
+                  {trackingSteps.map((step, index) => {
                     const active = index <= trackingStep;
                     const current = index === trackingStep;
 
                     return (
-                      <div key={label} className="flex flex-1 items-start">
+                      <div key={step.label} className="flex flex-1 items-start">
                         <div className="flex flex-1 flex-col items-center text-center">
                           <div
                             className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold ${
@@ -282,7 +298,7 @@ export default function PedidoDetallePage() {
 
                     return (
                       <div
-                        key={label}
+                        key={step.label}
                         className={`flex items-center gap-4 rounded-2xl border p-4 ${
                           active
                             ? "border-zinc-200 bg-zinc-50"
@@ -304,7 +320,7 @@ export default function PedidoDetallePage() {
                             active ? "text-zinc-950" : "text-zinc-400"
                           }`}
                         >
-                          {label}
+                          {step.label}
                         </span>
 
                         {trackingTimes[index] && active ? (
