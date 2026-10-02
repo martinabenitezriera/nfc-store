@@ -317,6 +317,44 @@ export default function PedidoDetallePage() {
               </div>
             </div>
 
+
+            <div className="mt-8 grid gap-8 md:grid-cols-[0.8fr_1.2fr]">
+              <div className="flex items-center justify-center rounded-[2rem] bg-zinc-50 p-8">
+                {order.url ? (
+                  <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(order.url)}`}
+                    alt="Código QR de tu tarjeta NFC"
+                    className="h-48 w-48 rounded-2xl bg-white p-3"
+                  />
+                ) : (
+                  <div className="flex h-48 w-48 items-center justify-center rounded-2xl border border-dashed border-zinc-200 text-center text-sm text-zinc-400">
+                    No hay un enlace configurado
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-col justify-center rounded-[2rem] border border-zinc-200 p-7 md:p-9">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
+                  Tu tarjeta está activa
+                </p>
+                <h2 className="mt-3 text-2xl font-black tracking-tight md:text-3xl">
+                  Prueba el mismo enlace con QR.
+                </h2>
+                <p className="mt-3 leading-7 text-zinc-600">
+                  Escanea este código con tu móvil para comprobar que abre exactamente el destino que elegiste para tu tarjeta NFC.
+                </p>
+
+                <div className="mt-6 rounded-2xl bg-zinc-50 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-400">
+                    Destino
+                  </p>
+                  <p className="mt-2 truncate text-sm font-semibold text-zinc-900">
+                    {order.url || "Sin enlace"}
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <Link
               href="/pedidos"
               className="mt-8 inline-flex rounded-full bg-zinc-950 px-8 py-4 font-semibold text-white transition hover:scale-[1.01] hover:bg-zinc-800"
