@@ -293,7 +293,7 @@ export default function PedidoDetallePage() {
                 </div>
 
                 <div className="space-y-3 sm:hidden">
-                  {trackingSteps.map((label, index) => {
+                  {trackingSteps.map((step, index) => {
                     const active = index <= trackingStep;
 
                     return (
