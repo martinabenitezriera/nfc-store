@@ -29,7 +29,7 @@ const styleLabels: Record<string, string> = {
 
 const trackingSteps = [
   "Pedido recibido",
-  "En preparación",
+  "Preparando",
   "Enviado",
   "Entregado",
 ];
