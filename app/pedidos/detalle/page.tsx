@@ -268,7 +268,7 @@ export default function PedidoDetallePage() {
                               current ? "text-emerald-700" : active ? "text-zinc-950" : "text-zinc-400"
                             }`}
                           >
-                            {label}
+                            {step.label}
                           </p>
 
                           {trackingTimes[index] && active ? (
